@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "379942055420",
+    "project_id": "intan-agkape-etr",
+    "storage_bucket": "intan-agkape-etr.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:379942055420:android:42ab7508727ec3a21a1679",
+        "android_client_info": {
+          "package_name": "com.example.intan_agkape_etr"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfOAuLsS01m5xAiGUJ9SR7-wpPYn5O2nE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

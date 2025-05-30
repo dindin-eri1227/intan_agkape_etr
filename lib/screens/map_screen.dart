@@ -3,7 +3,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 
 class MapScreen extends StatefulWidget {
-  const MapScreen({super.key});
+  final String weather;
+  const MapScreen({super.key, required this.weather});
 
   @override
   State<MapScreen> createState() => _MapScreenState();
@@ -17,6 +18,7 @@ class _MapScreenState extends State<MapScreen> {
     'Wi-Fi': false,
     'Pet-Friendly': false,
     'Outdoor': false,
+    'Indoor': false,
   };
 
   final List<Map<String, dynamic>> _cafes = [
@@ -28,7 +30,7 @@ class _MapScreenState extends State<MapScreen> {
     {
       'name': 'Cafe Komunidad',
       'position': LatLng(14.6010, 120.9830),
-      'features': ['Pet-Friendly', 'Wi-Fi'],
+      'features': ['Pet-Friendly', 'Wi-Fi', 'Indoor'],
     },
     {
       'name': 'Morning Roast',
@@ -40,6 +42,11 @@ class _MapScreenState extends State<MapScreen> {
   List<Map<String, dynamic>> get _filteredCafes {
     final activeFilters =
         _filters.entries.where((e) => e.value).map((e) => e.key).toList();
+
+    // Inject weather suggestion logic
+    if (widget.weather == 'Rain') activeFilters.add('Indoor');
+    if (widget.weather == 'Clear') activeFilters.add('Outdoor');
+
     if (activeFilters.isEmpty) return _cafes;
 
     return _cafes
@@ -103,11 +110,11 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Coffee Map"),
+        title: const Text("Coffee Map"),
         centerTitle: true,
       ),
       body: _userLocation == null
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : Stack(
               children: [
                 GoogleMap(
@@ -144,7 +151,7 @@ class _MapScreenState extends State<MapScreen> {
                   child: FloatingActionButton(
                     backgroundColor: Colors.brown,
                     onPressed: _recenterMap,
-                    child: Icon(Icons.my_location),
+                    child: const Icon(Icons.my_location),
                   ),
                 ),
 
@@ -163,12 +170,12 @@ class _MapScreenState extends State<MapScreen> {
                         final cafe = _filteredCafes[index];
                         return Container(
                           width: 220,
-                          margin: EdgeInsets.all(10),
-                          padding: EdgeInsets.all(10),
+                          margin: const EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             color: Colors.brown[50],
                             borderRadius: BorderRadius.circular(12),
-                            boxShadow: [
+                            boxShadow: const [
                               BoxShadow(
                                 color: Colors.black12,
                                 blurRadius: 4,
@@ -180,12 +187,12 @@ class _MapScreenState extends State<MapScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(cafe['name'],
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold)),
-                              SizedBox(height: 6),
+                              const SizedBox(height: 6),
                               Text("Features: ${cafe['features'].join(', ')}",
-                                  style: TextStyle(fontSize: 12)),
+                                  style: const TextStyle(fontSize: 12)),
                             ],
                           ),
                         );

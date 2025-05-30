@@ -5,7 +5,6 @@ class PassportScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Mocked progress and stamps
     final cafesVisited = 4;
     final goal = 10;
 
